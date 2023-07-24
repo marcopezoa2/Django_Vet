@@ -1,0 +1,69 @@
+{% extends 'base/base_modulos.html' %}
+
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% block title %} Ayuda {% endblock title %}
+
+{% block contenido %}
+<style>
+  /* Estilos personalizados */
+  .help-section {
+    padding: 20px;
+  }
+
+  .help-section h3 {
+    margin-bottom: 20px;
+  }
+
+  .help-item {
+    margin-bottom: 20px;
+  }
+
+  .help-item img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  .modal-image {
+    max-width: 100%;
+    height: auto;
+  }
+</style>
+
+<div class="container">
+  <div class="help-section">
+    <h3>Sección de Ayuda - Menú Paciente</h3>
+    <div class="row">
+      {% for imagen in imagenes %}
+      <div class="col-md-4">
+        <div class="help-item">
+          <img src="{% static imagen.src %}" alt="{{ imagen.alt }}" data-toggle="modal"
+            data-target="#modal{{ forloop.counter }}">
+          <p>{{ imagen.texto }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Modales -->
+{% for imagen in imagenes %}
+<div class="modal fade" id="modal{{ forloop.counter }}" tabindex="-1" role="dialog"
+  aria-labelledby="modal{{ forloop.counter }}Label" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <img src="{% static imagen.src %}" alt="{{ imagen.alt }}" class="img-fluid modal-image">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+
+{% endblock %}

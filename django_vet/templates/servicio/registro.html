@@ -1,0 +1,77 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Registro Servicios {% endblock title %}
+
+
+
+
+{% block contenido %}
+{% for error in form.non_field_errors %}
+<hr>
+<div class='alert alert-danger'>
+  {{ error }}
+</div>
+<hr>
+{% endfor %}
+<div class="col-lg-8 col-md-8 col-sm-12 mx-auto py-4">
+  <div class="card card-dark">
+    <div class="card-header">
+      {% if view.request.resolver_match.url_name == 'crear_servicio' %}
+        <h3 class="text-center">Registrar Servicio</h3>
+      {% elif view.request.resolver_match.url_name == 'actualizar_servicio' %}
+        <h3 class="text-center">Modificar Servicio</h3>
+      {% endif %}
+    </div>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="card-body">
+        {% for field in form %}
+        <div class="form-group row{% if field.errors %} has-error{% endif %}">
+          <div class="col-sm-12">
+            <label for="{{ field.auto_id }}" class="control-label col-lg-12">{{ field.label }}</label>
+          </div>
+          <div class="col-sm-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend col-lg-12">
+                <div class="input-group">
+                  <span class="input-group-text">
+                    {% if field.name == 'nombre' %}
+                    <i class="fas fa-pager"></i>
+                    {% elif field.name == 'descripcion' %}
+                    <i class="fas fa-info"></i>
+                    {% elif field.name == 'costo' %}
+                    <i class="fas fa-dollar-sign"></i>
+                    {% else %}
+                    <i class="fas fa-info"></i>
+                    {% endif %}
+                  </span>
+                  {% render_field field class="form-control" %}
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          {% for error in field.errors %}
+          <div class="col-sm-6 offset-sm-6">
+            <span class="help-block" style="color: red;">{{ error }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="card-footer">
+        <div class="button-container text-center">
+          <button type="submit" class="btn btn-dark">Guardar</button>
+          <a href="{% url 'servicio:lista_servicio' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock contenido %}   

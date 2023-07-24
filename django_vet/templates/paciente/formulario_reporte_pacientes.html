@@ -1,0 +1,36 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Reporte paciente {% endblock title %}
+
+
+
+{% block js %}
+{% endblock %}
+{% load humanize %}
+{% block contenido %}
+<div class="container">
+    <form method="post" action="{% url 'consulta:reporte_consultas' %}">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fecha_inicio">Fecha de inicio:</label>
+                    <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fecha_fin">Fecha de fin:</label>
+                    <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" required>
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Generar Reporte</button>
+    </form>
+</div>
+{% endblock contenido %}

@@ -1,0 +1,66 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Detalle {% endblock title %}
+{% load humanize %}
+{% block contenido %}
+
+
+<div class="container my-4">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-8">
+          <h3>Detalles del Producto</h3>
+          <!-- <h3 class="card-title">Detalles de consulta</h3> -->
+        </div>
+        <div class="col-md-4 text-md-right">
+          <a href="{% url 'inventario:actualizar_producto' producto.pk %}" class="btn btn-success btn-sm"><i
+              class="fa fa-edit"></i></a>
+          <a href="{% url 'inventario:eliminar_producto' producto.pk %}" class="btn btn-danger btn-sm"><i
+              class="fa fa-trash"></i></a>
+          <a href="{% url 'inventario:listar_producto'%}" class="btn btn-sm btn-primary"><i
+              class="fas fa-arrow-left"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h4>{{ producto.nombre }}</h4>
+          <p><strong>ID:</strong> {{ producto.pk }}</p>
+          <p><strong>Descripcion:</strong> {{ producto.descripcion }}</p>
+          <p><strong>Categoria:</strong> {{ producto.categoria }} Meses</p>
+          <p><strong>Proveedor:</strong> {{ producto.proveedor }}</p>
+          <p><strong>Stock Actual:</strong> {{ producto.cantidad }}</p>
+          <p><strong>Stock Mínimo:</strong> {{ producto.stock_minimo }}</p>
+          <p><strong>Precio venta:</strong> ${{ producto.precio_venta|floatformat:0|intcomma }}</p>
+          <p><strong>Precio compra:</strong> ${{ producto.precio_compra|floatformat:0|intcomma }}</p>
+          <p><strong>Fecha creación:</strong> {{ producto.fecha_creacion|date:"d/m/Y" }}</p>
+        </div>
+        <div class="row justify-content-center align-items-center mx-auto">
+          <div class="col-md-12">
+            {% if producto.imagen %}
+            <img src="{{ producto.imagen.url }}" alt="Imagen producto" class="img-fluid">
+            {% else %}
+            <img src="{% static 'img/no_image/no_image.png'%}" alt="Imagen producto" class="img-fluid">
+            {% endif %}
+          </div>
+            
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

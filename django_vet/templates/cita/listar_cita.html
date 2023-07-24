@@ -1,0 +1,110 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Ver citas agendadas{% endblock title %}
+
+{% block contenido %}
+
+
+<div class="container pt-2">
+    <div class="row">
+        <div class="col-md-12">
+            <!-- FORMULARIO DE BÚSQUEDA -->
+            <form action="{% url 'cita:buscar_cita' %}" method="GET">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Buscar cita..." name="q" value="{{ request.GET.q }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">Buscar</button>
+                        <a href="{% url 'cita:listar_cita' %}" class="btn btn-secondary">Mostrar todas las citas médicas</a>
+                    </div>
+                </div>
+            </form>
+            <hr>
+            {% block results %}
+            {% if request.GET.q %}
+            <div class="card alert alert-success">
+                <h4 class="mt-2 ml-3">Resultados de la búsqueda:</h4>
+                <div class="card-body py-0 my-0">
+                    <ul>
+                        {% for cita in object_list %}
+                        <li>
+                            {{ cita.veterinario }} - Atención: {{ cita.fecha_cita }} de {{ cita.get_horario_display }} hrs. 
+                        </li>
+                        {% empty %}
+                        <li>
+                            <td colspan="9" class="text-danger">No se encontraron resultados.</td>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>        
+            {% endif %}
+            {% if mensaje %}
+            <div class="alert alert-info d-flex align-items-center" role="alert">
+                <p class="m-0">{{ mensaje }}</p>
+              </div>
+            
+            {% endif %}
+            {% endblock %}
+            <hr>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <h2 class="text-center">Lista de Citas</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <thead class="text-center">
+                        <tr>
+                            <th>ID</th>
+                            <th>Fecha cita</th>
+                            <th>Dueño</th>
+                            <th>Paciente</th>
+                            <th>Veterinario</th>
+                            <th>Horario</th>
+                            <th>Fecha creación</th>                           
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for cita in object_list %}
+                        <tr>
+                            <td class="text-center">{{ cita.id }}</td>
+                            <td class="text-center">{{ cita.fecha_cita|date:"d/m/Y" }}</td>
+                            <td class="text-center">{{ cita.paciente.dueño }}</td>
+                            <td>{{ cita.paciente }}</td>
+                            <td>{{ cita.veterinario }}</td>
+                            
+                            <td class="text-center">{{ cita.get_horario_display}}</td>
+                            <td class="text-center">{{ cita.fecha_creacion|date:"d/m/Y" }}
+                            <td class="text-center">
+                                <a href="{% url 'cita:actualizar_cita' cita.pk %}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+                                <a href="{% url 'cita:eliminar_cita' cita.pk %}" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" style="background-color: brown; color: azure;">No hay citas disponibles</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                
+            </div>
+            <div>
+                {% include 'base/paginacion.html' %}
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+{% endblock %}

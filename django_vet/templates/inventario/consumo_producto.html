@@ -1,0 +1,60 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Consumo productos {% endblock title %}
+
+{% block contenido %}
+<div class="col-lg-8 col-md-8 col-sm-12 mx-auto py-4">
+  <div class="card card-dark">
+    <div class="card-header">
+      <h3 class="text-center">Registro de Consumo de Productos</h3>
+    </div>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="card-body">
+        {% for field in form %}
+        <div class="form-group row{% if field.errors %} has-error{% endif %}">
+          <div class="col-sm-12">
+            <label for="{{ field.auto_id }}" class="control-label col-lg-12">{{ field.label }}</label>
+          </div>
+          <div class="col-sm-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend col-lg-12">
+                <div class="input-group">
+                  <span class="input-group-text">
+                    {% if field.name == 'producto_id' %}
+                    <i class="fas fa-archive"></i>
+                    {% elif field.name == 'cantidad_utilizada' %}
+                    <i class="fas fa-balance-scale-right"></i>
+                    {% else %}
+                    <i class="fas fa-key"></i>
+                    {% endif %}
+                  </span>
+                  {% render_field field class="form-control" %}
+                </div>
+                
+              </div>
+            </div>
+          </div>
+          {% for error in field.errors %}
+          <div class="col-sm-6 offset-sm-6">
+            <span class="help-block" style="color: red;">{{ error }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="card-footer">
+        <div class="button-container text-center">
+          <button type="submit" class="btn btn-dark">Registrar</button>
+          <a href="{% url 'inventario:lista_producto' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

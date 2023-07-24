@@ -1,0 +1,48 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Reporte Consultas Medicas {% endblock title %}
+{% load humanize %}
+{% block contenido %}
+<div class="container">
+    <div class="row justify-content-center align-items-center pb-2">
+        <div class="col-lg-10 col-md-6 col-sm-12">
+            <h1>Reporte de Consultas</h1>
+            <h3>Total de consultas realizadas en el periodo seleccionado: {{ total_consultas }}</h3>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12 text-center">
+            <a href="{% url 'consulta:lista_consulta' %}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>
+                Volver</a>
+        </div>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Fecha de Consulta</th>
+                    <th>Veterinario</th>
+                    <th>Paciente</th>
+                    <th>Diagnóstico</th>
+                    <th>Tratamiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consulta in consultas %}
+                <tr>
+                    <td>{{ consulta.fecha_consulta|date:"d/m/Y" }}</td>
+                    <td>{{ consulta.veterinario }}</td>
+                    <td>{{ consulta.paciente }}</td>
+                    <td>{{ consulta.diagnostico }}</td>
+                    <td>{{ consulta.tratamiento }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

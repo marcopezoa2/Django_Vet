@@ -1,0 +1,49 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Reporte paciente {% endblock title %}
+
+{% block contenido %}
+<div class="container">
+    <div class="row justify-content-center align-items-center pb-2">
+        <div class="col-lg-10 col-md-6 col-sm-12">
+            <h1>Reporte de Pacientes</h1>
+            <h3>Total de pacientes registrados en el periodo seleccionado: {{ total_pacientes }}</h3>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12 text-center">
+            <a href="{% url 'paciente:lista_paciente' %}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>
+                Volver</a>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Fecha de creación</th>
+                    <th>Cliente</th>
+                    <th>Nombre</th>
+                    <th>Edad (Años)</th>
+                    <th>Genero</th>
+                    <th>Especie</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paciente in pacientes %}
+                <tr>
+                    <td>{{ paciente.fecha_creacion|date:"d/m/Y" }}</td>
+                    <td>{{ paciente.dueño }}</td>
+                    <td>{{ paciente.nombre }}</td>
+                    <td>{{ paciente.edad }}</td>
+                    <td>{{ paciente.genero }}</td>
+                    <td>{{ paciente.especie }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,498 @@
+<!-- HERENCIA del template base 'base.html' -->
+{% extends 'base/base_web.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+
+
+{% block title %} Veterinaria 'El Valle' {% endblock title %}
+
+
+{% block body %}
+
+<body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+
+        {% block navbar %}
+        <!-- Barra Navegacion superior WEB -->
+        <!-- Navbar -->
+        <nav class="nav_nav main-header navbar navbar-expand-md navbar-light navbar-dark">
+            <div class="container my-1">
+                <a href="{% url 'index' %}" class="navbar-brand">
+                    <img src="{% static 'img/logo/LogoVet.png' %}" alt="Logo Veterinaria"
+                        class="brand-image img-circle elevation-3" style="opacity: .8">
+                    <span class="brand-text">Veterinaria 'El Valle'</span>
+                </a>
+
+                <button class="navbar-toggler order-1" type="button" data-toggle="collapse"
+                    data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                    <!-- Menu izquierdo -->
+                    <ul class="navbar-nav mx-2">
+                        <li class="nav-item">
+                            <a href="{% url 'index' %}" class="nav-link navTextLink">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'index' %}#nosotros" class="nav-link navTextLink">Nosotros</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'index' %}#servicios" class="nav-link navTextLink">Servicios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'index' %}#team" class="nav-link navTextLink">Team</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'index' %}#valores" class="nav-link navTextLink">Valores</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'cita:crear_cita'%}" class="nav-link navTextLink">Agendar Hora</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'home:contacto' %}" class="nav-link navTextLink">Contacto</a>
+                        </li>
+                    </ul>
+                    <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link navTextLink" href="{% url 'accounts:index' %}"><i
+                                    class="fas fa-house-user"></i> Mi cuenta</a>
+                        </li>
+                        <li class="nav-item">
+                            <!-- <a class="nav-link" href="{% url 'accounts:logout' %}">Salir</a> -->
+                            <a class="nav-link navTextLink" href="{% url 'accounts:logout' %}"
+                                onclick="confirmLogout(event)"><i class="fas fa-sign-out-alt"></i> Salir</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link navTextLink" href="{% url 'accounts:login' %}"><i
+                                    class="fas fa-sign-in-alt"></i> Ingresar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link navTextLink" href="{% url 'accounts:register' %}">Registrarse</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- /.navbar -->
+        {% endblock navbar %}
+
+
+        <!-- Contenido -> Content Wrapper. Contains page content (div class="content-wrapper" -> no modificar)-->
+        <div class="content-wrapper">
+            <!-- Muestra los mensajes de errores en el top de la pagina principal -->
+            {% block messages %}
+            {% for message in messages %}
+            {% if message.tags == 'success' %}
+            <script>
+                swal.fire({
+                    icon: 'success',
+                    title: 'Bien',
+                    html: '<span class="text-white">{{ message }}</span>',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    toast: true,
+                    background: '#343a40',
+                    iconColor: '#ffffff',
+                    customClass: {
+                        title: 'text-white',
+                        popup: 'bg-success'
+                    }
+                });
+            </script>
+            {% elif message.tags == 'error' %}
+            <script>
+                swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    html: '<span class="text-white">{{ message }}</span>',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    toast: true,
+                    background: '#343a40',
+                    iconColor: '#ffffff',
+                    customClass: {
+                        title: 'text-white',
+                        popup: 'bg-danger'
+                    }
+                });
+            </script>
+            {% elif message.tags == 'info' %}
+            <script>
+                swal.fire({
+                    icon: 'info',
+                    title: 'Info',
+                    html: '<span class="text-white">{{ message }}</span>',
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    toast: true,
+                    background: '#343a40',
+                    iconColor: '#ffffff',
+                    customClass: {
+                        title: 'text-white',
+                        popup: 'bg-info'
+                    }
+                });
+            </script>
+            {% endif %}
+            {% endfor %}
+            {% endblock messages %}
+
+
+            {% block contenido %}
+            <!-- Seccion principal con un jumbotron  -->
+            <main id="index-main">
+                <section id="jumbo" class="mt-4 mx-3">
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h1 class="display-5">Clínica Veterinaria El Valle</h1>
+                            <p class="lead text-justify">Servicio profesional y atención personalizada para el cuidado
+                                de tu mascota.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Seccion principal bienvenida  -->
+                <section id="welcome" class="mx-3">
+                    <div class="container bg-light py-2">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="hero-text-box">
+                                    <h1 class="text-center">Bienvenidos a Clinica Veterinaria El Valle</h1>
+                                    <p class="text-justify">En nuestra clínica veterinaria ofrecemos servicios de alta
+                                        calidad y tratamientos
+                                        personalizados para tus mascotas. Contamos con un equipo de profesionales
+                                        altamente capacitados para
+                                        brindarte la mejor atención.</p>
+                                    <p class="text-center"><a class="btn btn-primary"
+                                            href="{% url 'cita:crear_cita'%}">Agenda tu cita</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <hr style="border-bottom: 3px solid rgb(204, 197, 197);">
+
+                <!-- Seccion principal Nosotros  -->
+                <section id="nosotros" class="mx-3">
+                    <div class="container bg-light pt-3">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h2 class="section-heading text-uppercase text-center">Nuestra Clínica Veterinaria</h2>
+                                <p class="text-justify">Somos una clínica veterinaria dedicada al cuidado de las
+                                    mascotas. Contamos con un
+                                    equipo de profesionales altamente capacitados y equipamiento de última generación
+                                    para brindar la mejor
+                                    atención médica.</p>
+                                <p class="text-justify"> Nuestro principal objetivo es mejorar la calidad de vida de las
+                                    mascotas, prevenir
+                                    enfermedades y brindar
+                                    tratamientos efectivos en caso de enfermedades o lesiones.</p>
+                                <p class="text-justify">Ofrecemos una amplia variedad de servicios, desde consultas
+                                    generales hasta cirugías
+                                    de alta complejidad,
+                                    siempre con el compromiso de brindar una atención personalizada y de calidad.</p>
+                            </div>
+                            <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                <img src="{% static 'img/other/us.jpg' %}" alt="" class="img-fluid">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <hr style="border-bottom: 3px solid rgb(204, 197, 197);">
+
+
+                <!-- Sección de servicios veterinarios disponibles -->
+                <section id="servicios" class="mx-3">
+                    <div class="container bg-light py-4">
+                        <div class="row">
+                            <div class="col-lg-12 text-center my-2">
+                                <h2 class="section-heading text-uppercase">Servicios Veterinarios</h2>
+                                <h3 class="section-subheading text-muted">Ofrecemos una amplia variedad de servicios
+                                    para el cuidado de tu
+                                    mascota.</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6 text-center my-2">
+                                    <div class="card border-0">
+                                        <img src="{% static 'img/services/consulta.png' %}" class=" mx-auto "
+                                            alt="img-vacunacion" style="max-width: 60%; height: auto;">
+                                    </div>
+                                    <div class="px-3">
+                                        <h5 class="card-title text-center mt-2">Consultas veterinarias</h5>
+                                        <p class="card-text text-justify">Es un servicio fundamental en el cuidado de la
+                                            salud de nuestras
+                                            mascotas. En una consulta veterinaria, se realiza una evaluación completa
+                                            del animal, se le realiza un
+                                            examen físico y se discuten los síntomas o problemas de salud que puedan
+                                            estar presentes. El objetivo es
+                                            diagnosticar y tratar cualquier enfermedad o dolencia que pueda estar
+                                            afectando al animal, así como
+                                            prevenir futuras complicaciones.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 text-center my-2">
+                                    <div class="card border-0">
+                                        <img src="{% static 'img/services/vacunacion.png' %}" class=" mx-auto "
+                                            alt="img-vacunacion" style="max-width: 60%; height: auto;">
+                                    </div>
+                                    <div class="px-3">
+                                        <h5 class="card-title text-center mt-2">Vacunación</h5>
+                                        <p class="card-text text-justify">La vacunación es una forma importante de
+                                            prevenir enfermedades
+                                            infecciosas en los animales. Los veterinarios recomiendan un programa de
+                                            vacunación para cada animal,
+                                            basado en su edad, su estilo de vida y su estado de salud general. Al
+                                            vacunar a nuestras mascotas,
+                                            estamos protegiéndolas no solo a ellas, sino también a otros animales y a
+                                            las personas que conviven con
+                                            ellas.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 text-center my-2">
+                                    <div class="card border-0">
+                                        <img src="{% static 'img/services/agenda.png' %}" class=" mx-auto "
+                                            alt="img-vacunacion" style="max-width: 60%; height: auto;">
+                                    </div>
+                                    <div class="px-3">
+                                        <h5 class="card-title text-center mt-2">Traumatologia</h5>
+                                        <p class="card-text text-justify">El servicio de traumatología veterinaria se
+                                            enfoca en el diagnóstico y
+                                            tratamiento
+                                            de lesiones y problemas óseos, musculares y articulares en animales. Los
+                                            profesionales especializados en
+                                            traumatología están capacitados para tratar afecciones como fracturas,
+                                            luxaciones, lesiones de
+                                            ligamentos y tendones, hernias de disco, entre otros.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6 text-center my-2">
+                                    <div class="card border-0">
+                                        <img src="{% static 'img/services/prescripcion.png' %}" class=" mx-auto "
+                                            alt="img-vacunacion" style="max-width: 60%; height: auto;">
+                                    </div>
+                                    <div class="px-3">
+                                        <h5 class="card-title text-center mt-2">Urgencias</h5>
+                                        <p class="card-text text-justify">Las urgencias veterinarias son aquellas
+                                            situaciones en las que un animal
+                                            necesita
+                                            atención médica inmediata. Pueden incluir lesiones traumáticas,
+                                            envenenamientos, dificultad para
+                                            respirar, problemas gastrointestinales, entre otros. Los servicios de
+                                            urgencias veterinarias brindan
+                                            atención médica rápida y efectiva para garantizar la salud y el bienestar
+                                            del animal en situaciones
+                                            críticas.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+                <hr style="border-bottom: 3px solid rgb(204, 197, 197);">
+
+
+                <!-- Sección de equipo de veterinario -->
+                <section class="page-section bg-light mx-3" id="team">
+                    <div class="container py-3">
+                        <div class="col-lg-12 text-center">
+                            <h2 class="section-heading text-uppercase">Nuestro equipo</h2>
+                            <h3 class="section-subheading text-muted ">Conoce a los profesionales altamente capacitados
+                                que forman parte de
+                                nuestro equipo en la clínica veterinaria.</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3">
+                                <div class="team-member text-center my-3">
+                                    <img class="mx-auto rounded-circle" src="{% static 'img/team/team1.png' %}"
+                                        alt="Team 1">
+                                    <h4>Dr. Juan Pérez</h4>
+                                    <p class="text-muted">Médico Veterinario</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="team-member text-center my-3">
+                                    <img class="mx-auto rounded-circle" src="{% static 'img/team/team5.png' %}"
+                                        alt="Team 2">
+                                    <h4>Dra. Ana Gómez</h4>
+                                    <p class="text-muted">Médico Veterinario</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="team-member text-center my-3">
+                                    <img class="mx-auto rounded-circle" src="{% static 'img/team/team3.png' %}"
+                                        alt="Team 3">
+                                    <h4>Lic. Martina López</h4>
+                                    <p class="text-muted">Técnico Veterinario</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3">
+                                <div class="team-member text-center my-3">
+                                    <img class="mx-auto rounded-circle" src="{% static 'img/team/team4.png' %}"
+                                        alt="Team 4">
+                                    <h4>Lic. Diego González</h4>
+                                    <p class="text-muted">Técnico Veterinario</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-8 mx-auto text-center pt-3">
+                                <p class="large text-muted text-justify">Te presentamos a cada uno de nuestros doctores
+                                    y sus especialidades,
+                                    para que
+                                    puedas conocer su experiencia y habilidades en el cuidado de la salud de tu mascota.
+                                    Nuestro equipo está
+                                    dedicado a brindar la mejor atención posible para garantizar la salud y el bienestar
+                                    de tu amigo peludo.
+                                    ¡Conócelos hoy mismo!</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <hr style="border-bottom: 3px solid rgb(204, 197, 197);">
+
+                <!-- Seccion de Valores -->
+                <section class="page-section mx-3" id="valores">
+                    <div class="container bg-light">
+                        <div class="py-3">
+                            <h2 class="section-heading text-uppercase text-center">Nuestros Valores</h2>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h4 class="section-subheading text-muted">
+                                        <ul>
+                                            <li>Compromiso con la salud de las mascotas</li>
+                                            <li>Atención personalizada y de calidad</li>
+                                        </ul>
+                                    </h4>
+                                </div>
+                                <div class="col-md-6">
+                                    <h4 class="section-subheading text-muted">
+                                        <ul>
+                                            <li>Profesionalismo y ética</li>
+                                            <li>Innovación y actualización constante</li>
+                                        </ul>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            {% endblock contenido %}
+
+        </div>
+        <!-- /.content-wrapper -->
+
+
+        <!-- Boton para subir arriba -->
+        <button class="btn-scroll" id="btn_scroll">
+            <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>
+        </button>
+
+
+        {% block footer%}
+        <!-- Footer -> Main Footer -->
+        <footer class="main-footer">
+            <div class="row">
+                <div class="col-md-6 px-5">
+                    <h4>Contacto</h4>
+                    <ul class="list-unstyled">
+                        <li>Dirección: Av. San Carlos 1340, Puente Alto</li>
+                        <li>Teléfono: +569 1234 5678</li>
+                        <li>Email: admin@vetelvalle.cl</li>
+                    </ul>
+                </div>
+
+                <div class="col-md-6 px-5">
+                    <h4>Suscríbete</h4>
+                    <form method="post" action="{% url 'home:suscripcion' %}">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Ingresa tu email" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="text-muted">©2023-Grupo2 Todos los derechos reservados </p>
+                </div>
+            </div>
+        </footer>
+        <!-- ./main-footer -->
+        {% endblock footer%}
+    </div>
+    <!-- ./wrapper -->
+
+
+    {% block js %}
+
+    <!-- Confirma cerrar sesión -->
+    {{ block.super }}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        function confirmLogout(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Confirmar',
+                text: '¿Estás seguro de que quieres cerrar sesión?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Cerrar sesión',
+                cancelButtonText: 'Cancelar',
+                cancelButtonColor: '#d33',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = event.target.href;
+                }
+            });
+        }
+    </script>
+
+    <!-- Volver a la pagina anterior -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+
+    <!-- Para los SCRIPTS -->
+    <!-- jQuery -->
+    <script src="{% static 'lib/adminLTE/plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap 4 -->
+    <script src="{% static 'lib/adminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static 'lib/adminLTE/dist/js/adminlte.min.js' %}"></script>
+    <!-- Boton Scroll -->
+    <script src="{% static 'js/base/index.js' %}"></script>
+    <!-- Bootstrap 4.6.2 -->
+    <script src="{% static 'lib/bootstrap4.6/js/jquery.slim.min.js' %}"></script>
+    <script src="{% static 'lib/bootstrap4.6/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- JS -->
+    <script src="{% static 'js/base/contacto.js' %}"></script>
+    <script src="{% static 'js/base/rut_helpers.js' %}"></script>
+    <script src="{% static 'js/base/validaciones_formularios.js' %}"></script>
+    
+    {% endblock js %}
+</body>
+{% endblock body %}

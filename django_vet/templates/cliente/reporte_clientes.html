@@ -1,0 +1,53 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Reporte clientes {% endblock title %}
+
+{% block contenido %}
+<div class="container">
+    <div class="row justify-content-center align-items-center pb-2">
+        <div class="col-lg-10 col-md-6 col-sm-12">
+            <h1>Reporte de Clientes</h1>
+            <h3>Total clientes registrados en el periodo seleccionado: {{ total_clientes }}</h3>
+        </div>
+        <div class="col-lg-2 col-md-6 col-sm-12 text-center">
+            <a href="{% url 'accounts:lista_cliente' %}" class="btn btn-primary"><i class="fas fa-arrow-left"></i>
+                Volver</a>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Fecha de creación</th>
+                    <th>Rut cliente</th>
+                    <th>Nombre cliente</th>
+                    <th>Comuna</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr>
+                    <td>{{ cliente.date_joined|date:"d/m/Y" }}</td>
+                    <td>{{ cliente.rut }}</td>
+                    <td>{{ cliente.first_name }} {{ cliente.last_name }}</td>
+                    <td>{{ cliente.comuna }}</td>
+                    <td>
+                        {% if cliente.is_active %}
+                          Activo
+                        {% else %}
+                          Desactivado
+                        {% endif %}
+                      </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

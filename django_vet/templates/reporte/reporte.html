@@ -1,0 +1,73 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="text-center mb-4">{{ titulo }}</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <form method="GET" action="">
+          {% csrf_token %}
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="fecha_inicio">Fecha de inicio:</label>
+              <input type="date" name="fecha_inicio" id="fecha_inicio" class="form-control" required>
+            </div>
+
+            <div class="form-group col-md-6">
+              <label for="fecha_fin">Fecha de fin:</label>
+              <input type="date" name="fecha_fin" id="fecha_fin" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <label for="tipo_reporte">Tipo de reporte:</label>
+              <select name="tipo_reporte" id="tipo_reporte" class="form-control" required>
+                <option value="">Seleccionar tipo de reporte</option>
+                {% for opcion in opciones %}
+                  <option value="{{ opcion.value }}">{{ opcion.text }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Generar reporte</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    {% if datos %}
+      <div class="row">
+        <div class="col-md-12">
+          <hr>
+          <h2 class="text-center">{{ subtitulo }}</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                {% for columna in columnas %}
+                  <th>{{ columna }}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% for fila in datos %}
+                <tr>
+                  {% for valor in fila %}
+                    <td>{{ valor }}</td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% endblock %}

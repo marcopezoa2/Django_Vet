@@ -1,0 +1,32 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/index.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+
+{% block title %} Servicios {% endblock title %}
+
+{% block contenido %}
+<section id="servicios">
+
+    <div class="container mt-5">
+        <h1>Servicios Ofrecidos</h1>
+        <hr>
+        
+        <div class="card-deck">
+            {% for servicio in lista_servicios %}
+            <div class="card mb-4">
+                <!-- <img src="{{ servicio.imagen.url }}" class="card-img-top" alt="{{ servicio.nombre }}"> -->
+                <img src="{% static 'img/services/vacunacion.png'%}" class="card-img-top" alt="{{ servicio.nombre }}" width="50px" height="50%">
+                <div class="card-body">
+                    <h5 class="card-title">{{ servicio.nombre }}</h5>
+                    <p class="card-text">{{ servicio.descripcion }}</p>
+                    <p class="card-text">{{ servicio.costo }}</p>
+                    <a href="#" class="btn btn-primary">Más información</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</section>
+{% endblock contenido %}

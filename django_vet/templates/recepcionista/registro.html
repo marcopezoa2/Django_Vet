@@ -1,0 +1,76 @@
+{% extends "accounts/index.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block title %}
+Registro | {{ block.super }}
+{% endblock %}
+
+{% block accounts_container %}
+
+<div class="container">
+  <div class="row ">
+    <div class="main-login main-center">
+      <div class="panel-heading">
+        <h2 class="text-center">Registrar Recepcionista</h2>
+      </div>
+      <hr>
+      <form class="form-horizontal" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for error in form.non_field_errors %}
+        <div class="alert alert-danger">
+          {{ error }}
+        </div>
+        {% endfor %}
+        <fieldset>
+          <div class="row">
+            {% for field in form %}
+            <div class="col-lg-6 col-md-12 col-sm-12">
+              <div class="form-group row{% if field.errors %} has-error{% endif %}">
+                <label for="{{ field.auto_id }}" class="cols-sm-6 control-label">{{ field.label }}</label>
+                <div class="input-group mb-3 form-group">
+                  <div class="input-group-prepend col-lg-12">
+                    {% if field.name == 'nombre' %}
+                    <span class="input-group-text"><i class="fa fa-building-o" aria-hidden="true"></i></span>
+                    {% elif field.name == 'descripcion' %}
+                    <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                    {% elif field.name == 'categoria' %}
+                    <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                    {% elif field.name == 'proveedor' %}
+                    <span class="input-group-text"><i class="fa fa-users" aria-hidden="true"></i></span>
+                    {% elif field.name == 'cantidad' %}
+                    <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                    {% elif field.name == 'stock_minimo' %}
+                    <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                    {% elif field.name == 'precio_venta' %}
+                    <span class="input-group-text"><i class="fa fa-money" aria-hidden="true"></i></span>
+                    {% elif field.name == 'precio_compra' %}
+                    <span class="input-group-text"><i class="fa fa-money" aria-hidden="true"></i></span>
+                    {% elif field.name == 'imagen' %}
+                    <span class="input-group-text"><i class="fa fa-file-image-o" aria-hidden="true"></i></span>
+                    {% else %}
+                    <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                    {% endif %}
+                    {% render_field field class="form-control" %}
+                  </div>
+                </div>
+                {% for error in field.errors %}
+                <span class="help-block">{{ error }}</span>
+                {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="{% url 'accounts:index' %}" class="btn btn-secondary">Cancelar</a>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

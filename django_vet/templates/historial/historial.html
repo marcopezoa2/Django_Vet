@@ -1,0 +1,61 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Historial Atenciones {% endblock title %}
+{% load humanize %}
+{% block contenido %}
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col">
+      <h1 class="text-center">Historial Médico de {{ paciente.nombre }}</h1>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col">
+      <div class="list-group">
+        {% for consulta in consultas %}
+          {% if consulta.pk %}
+          <a href="{% url 'consulta:consulta_detail' consulta.pk %}" class="list-group-item">
+            <!-- HAY QUE CREAR UN HTML DETALLE PARA MOSTRAR UNICAMENTE LA CONSULTA  -->
+          <div class="row">
+            <div class="col">
+              <h5 class="mb-1">{{ consulta.fecha_consulta }}</h5>
+              <small class="text-muted">Peso: {{ consulta.peso }} Kgs.</small>
+              <br>
+              <small class="text-muted">Temperatura: {{ consulta.temperatura }} °C</small>
+              <br>
+              <small class="text-muted">Motivo: {{ consulta.motivo }}</small>
+            </div>
+            <div class="col text-right">
+              <h5 class="mb-1">{{ consulta.veterinario.nombre }}</h5>
+              <small class="text-muted">{{ consulta.servicio.nombre }}</small>
+            </div>
+          </div>
+          </a>
+          {% endif %}
+          {% empty %}
+          <div class="alert alert-danger" role="alert">Aún hay consultas médicas disponibles</div>
+          {% endfor %}
+
+        
+        
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,62 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Reporte Consultas {% endblock title %}
+
+
+
+{% block js %}
+<script>
+    function setFormAction(action) {
+        var form = document.getElementById('reporte_form');
+        var fechaInicio = document.getElementById('fecha_inicio').value;
+        var fechaFin = document.getElementById('fecha_fin').value;
+        if (fechaInicio && fechaFin) {
+            switch (action) {
+                case 'ver_reporte':
+                    form.action = "{% url 'consulta:reporte_consultas' %}";
+                    break;
+                case 'generar_excel':
+                    form.action = "{% url 'consulta:generar_reporte_excel' %}";
+                    break;
+                case 'ver_pdf':
+                    form.action = "{% url 'consulta:generar_pdf' %}";
+                    break;
+            }
+            form.submit();
+        } else {
+            alert("Por favor, ingresa ambas fechas.");
+        }
+    }
+</script>
+{% endblock %}
+{% load humanize %}
+{% block contenido %}
+<div class="container">
+    <form id="reporte_form" method="post" action="">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fecha_inicio">Fecha de inicio:</label>
+                    <input type="date" class="form-control" id="fecha_inicio" name="fecha_inicio" required>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="fecha_fin">Fecha de fin:</label>
+                    <input type="date" class="form-control" id="fecha_fin" name="fecha_fin" required>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="setFormAction('ver_reporte')">Ver Reporte en Pantalla</button>
+        <button type="button" class="btn btn-danger" onclick="setFormAction('generar_excel')">Generar Reporte en Excel</button>
+        <button type="button" class="btn btn-warning" onclick="setFormAction('ver_pdf')">Ver Reporte en PDF</button>
+        <button type="submit" style="display: none;">Submit</button>
+    </form> 
+</div>
+{% endblock %}

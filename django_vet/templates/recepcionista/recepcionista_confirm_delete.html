@@ -1,0 +1,27 @@
+{% extends 'base/base_modulos.html' %}
+{% block title %} Eliminar Empleado {% endblock title %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block contenido %}
+<!-- Eliminación de registro mediante alerta -->
+<div class="container">
+  <div class="row justify-content-center align-items-center">
+    <div class="col-lg-6 col-md-8 col-sm-12 pt-5">
+      <div class="alert alert-danger text-white" style="background-color: #DC3545;">
+        <form action="" method="post" class="d-inline">
+          {% csrf_token %}
+          <h5><i class="icon fas fa-ban"></i> ¡Alerta!</h5>
+          <p> ¿Estás seguro de que quieres eliminar "{{ object }}"? </p>
+          <hr>
+          <div class="text-center">
+            <button type="submit" class="btn btn-warning">Sí, eliminar</button>
+            <a href="#" class="btn btn-info">Cancelar</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock contenido %}
+

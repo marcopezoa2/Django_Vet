@@ -1,0 +1,31 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Historial {% endblock title %}
+
+{% block contenido %}
+  <!-- <h2>Historial de {{ historial.paciente }}</h2>
+  <ul>
+    {% for consulta in historial.consultas.all %}
+      <li>{{ consulta.fecha_consulta }} - {{ consulta.motivo }}</li>
+    {% empty %}
+      <li>No hay consultas registradas en este historial.</li>
+    {% endfor %}
+  </ul> -->
+
+
+
+
+  <h1>Historial de {{ paciente.nombre }}</h1>
+<ul>
+{% for consulta in consultas %}
+    <li>{{ consulta.fecha_consulta }} - {{ consulta.servicio }} - {{ consulta.veterinario }}</li>
+{% endfor %}
+</ul>
+
+
+{% endblock %}

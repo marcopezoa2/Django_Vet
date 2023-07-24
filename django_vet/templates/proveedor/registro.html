@@ -1,0 +1,128 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Registrar Proveedor {% endblock title %}
+
+
+{% block contenido %}
+{% for error in form.non_field_errors %}
+<hr>
+<div class='alert alert-danger'>
+  {{ error }}
+</div>
+<hr>
+{% endfor %}
+<div class="col-lg-8 col-md-8 col-sm-12 mx-auto py-4">
+  <div class="card card-dark">
+    <div class="card-header">
+      {% if view.request.resolver_match.url_name == 'crear_proveedor' %}
+      <h3 class="text-center">Registrar Proveedor</h3>
+      {% elif view.request.resolver_match.url_name == 'actualizar_proveedor' %}
+      <h3 class="text-center">Modificar Proveedor</h3>
+      {% endif %}
+    </div>
+    <form method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+      {% csrf_token %}
+      <div class="card-body">
+        {% for field in form %}
+        <div class="form-group row mb-0 pt-3{% if field.errors %} has-error{% endif %}">
+          <label for="{{ field.auto_id }}" class="col-sm-6 control-label">{{ field.label }}</label>
+          <div class="input-group form-group mb-0">
+            <div class="input-group-prepend col-lg-12">
+              {% if field.name == 'rut_empresa' %}
+              <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+              {% elif field.name == 'correo' %}
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              {% elif field.name == 'direccion' or field.name == 'comuna' %}
+              <span class="input-group-text"><i class="fas fa-location-arrow"></i></i></span>
+              {% elif field.name == 'telefono' %}
+              <span class="input-group-text"><i class="fas fa-phone"></i></span>
+              {% else %}
+              <span class="input-group-text"><i class="fas fa-info-circle"></i></span>
+              {% endif %}
+              {% render_field field class="form-control" %}
+            </div>
+          </div>
+        </div>
+        {% if field.name == 'rut_empresa' %}
+        <i><span id="rutError" class='help-block error-message' style="color: red;"></span></i>
+        {% endif %}
+        {% for error in field.errors %}
+        <i><span class='help-block' style="color: red;">{{ error }}</span></i>
+        {% endfor %}
+        {% endfor %}
+      </div>
+      <div class="card-footer">
+        <div class="button-container text-center">
+          <button type="submit" class="btn btn-dark">Guardar</button>
+          <a href="{% url 'proveedor:lista_proveedor' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock contenido %}
+
+
+
+<div class="container-fluid">
+  <div class="container">
+    <div class="row ">
+      <div class="main-login main-center mx-3 my-3">
+        <div class="panel-heading">
+          <h2 class="text-center">Registrar Proveedor</h2>
+        </div>
+        <hr>
+        <form class="form-horizontal" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% for error in form.non_field_errors %}
+          <div class="alert alert-danger">
+            {{ error }}
+          </div>
+          {% endfor %}
+          <fieldset>
+            <div class="row">
+              {% for field in form %}
+              <div class="col-lg-6 col-md-12 col-sm-12">
+                <div class="form-group row{% if field.errors %} has-error{% endif %}">
+                  <label for="{{ field.auto_id }}" class="cols-sm-6 control-label">{{ field.label }}</label>
+                  <div class="input-group mb-3 form-group">
+                    <div class="input-group-prepend col-lg-12">
+                      {% if field.name == 'nombre_empresa' %}
+                      <span class="input-group-text"><i class="fa fa-building" aria-hidden="true"></i></span>
+                      {% elif field.name == 'rut_empresa' %}
+                      <span class="input-group-text"><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                      {% elif field.name == 'nombre_contacto' %}
+                      <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
+                      {% elif field.name == 'correo' %}
+                      <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                      {% elif field.name == 'telefono' %}
+                      <span class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                      {% else %}
+                      <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                      {% endif %}
+                      {% render_field field class="form-control" %}
+                    </div>
+                  </div>
+                  {% for error in field.errors %}
+                  <span class="help-block">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary mx-1">Guardar</button>
+              <a href="{% url 'proveedor:lista_proveedor' %}" class="btn btn-secondary">Cancelar</a>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

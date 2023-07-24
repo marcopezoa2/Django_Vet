@@ -1,0 +1,145 @@
+{% extends 'base/base_modulos.html' %}
+
+{% load static %}
+
+{% load widget_tweaks %}
+
+{% block title %} Ayuda {% endblock title %}
+
+{% block contenido %}
+<!-- 
+<div class="container px-4 py-4">
+    <h1 class="text-center">Plataforma de Gestión Veterinaria</h1>
+    <hr>
+    {% if user.tipo_usuario == 'administrador' %}
+    <div class="row pt-3 text-justify">
+        <div class="col-md-6">
+            <a href="{% url 'home:empleado_help'%}" style="color: black;"><h2><i class="fas fa-users"></i> Empleados</h2></a>
+            <p>Gestiona fácilmente a tus empleados, asigna roles y permisos, y mantén un registro actualizado de su información.</p>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'home:cliente_help'%}" style="color: black;"><h2><i class="fas fa-users"></i> Clientes</h2></a>
+            <p>Administra a tus clientes, registra sus datos personales y los datos de sus mascotas, y realiza seguimiento de sus consultas y citas agendadas.</p>         
+        </div>
+    </div>
+    {% endif%}
+
+    {% if user.tipo_usuario != 'cliente' %}
+    <div class="row pt-3 text-justify">
+        <div class="col-md-6">
+            <a href="{% url 'home:proveedor_help'%}" style="color: black;"><h2><i class="fas fa-truck"></i> Proveedores</h2></a>            
+            <p>Mantén un registro de tus proveedores, gestiona los productos y servicios que te suministran, y realiza pedidos de stock cuando sea necesario.</p>
+        </div>
+        <div class="col-md-6">
+            <a href="{% url 'home:servicio_help'%}" style="color: black;"><h2><i class="fas fa-paw"></i> Servicios</h2></a> 
+            <p>Administra los servicios veterinarios que ofreces, registra los detalles y precios de cada servicio, y realiza seguimiento de las citas agendadas.</p>
+        </div>
+    </div>
+    {% endif%}
+
+    
+    <div class="row pt-3 text-justify">
+        <div class="col-md-6">
+            <a href="{% url 'home:paciente_help'%}" style="color: black;"><h2><i class="fas fa-paw"></i> Pacientes</h2></a>
+            <p>Crea nuevos pacientes, registra a tu mascota, vee el historial de atenciones y el detalle de la mascota o paciente</p>
+        </div>
+
+        <div class="col-md-6">
+            <a href="{% url 'home:cita_help'%}" style="color: black;"><h2><i class="fas fa-calendar-alt"></i> Agendamiento Citas</h2></a>
+            <p>Programa y gestiona las citas de tus clientes, asigna veterinarios disponibles, y mantén un seguimiento de las consultas médicas programadas.</p>
+        </div>
+    </div>
+    
+    
+
+    {% if user.tipo_usuario != 'cliente' %}
+    <div class="row pt-3 text-justify">
+        <div class="col-md-6">
+            <a href="{% url 'home:inventario_help'%}" style="color: black;"><h2><i class="fas fa-boxes"></i> Inventario de Productos</h2></a>
+            <p>Controla el stock de tu inventario de productos veterinarios, registra detalles de cada producto, realiza seguimiento de las entradas y salidas, y recibe alertas de stock mínimo.</p>
+        </div>
+        
+        <div class="col-md-6">
+            <a href="{% url 'home:consulta_help'%}" style="color: black;"><h2><i class="fas fa-stethoscope"></i> Consultas Médicas</h2></a>
+            <p>Registra y realiza seguimiento de las consultas médicas de tus pacientes, registra diagnósticos, tratamientos y observaciones, y realiza cálculos médicos automáticos.</p>
+        </div>
+    </div>
+    {% endif%}
+
+    {% if user.tipo_usuario != 'cliente' %}
+    <div class="row pt-3 text-justify">
+        <div class="col-md-6">
+            <a href="{% url 'home:reporte_help'%}" style="color: black;"><h2><i class="fas fa-chart-bar"></i> Reportes</h2></a>
+            <p>Genera reportes en formato PDF y Excel para obtener información estadística, como el total de nuevos clientes, pacientes y consultas médicas en un periodo de tiempo determinado.</p>
+        </div>
+        
+    </div>
+    {% endif%} 
+</div>-->
+
+
+
+
+
+
+
+
+<div class="container px-4 py-4">
+    <h1 class="text-center">Plataforma de Gestión Veterinaria</h1>
+    <hr>
+    
+    <div class="row pt-3 text-justify">
+        {% if user.tipo_usuario == 'administrador' %}
+        <div class="col-md-6 pt-3">
+            <a href="{% url 'home:empleado_help'%}" style="color: black;"><h2><i class="fas fa-users"></i> Empleados</h2></a>
+            <p>Gestiona fácilmente a tus empleados, asigna roles y permisos, y mantén un registro actualizado de su información.</p>
+        </div>
+        
+        <div class="col-md-6 pt-3">
+            <a href="{% url 'home:cliente_help'%}" style="color: black;"><h2><i class="fas fa-users"></i> Clientes</h2></a>
+            <p>Administra a tus clientes, registra sus datos personales y los datos de sus mascotas, y realiza seguimiento de sus consultas y citas agendadas.</p>         
+        </div>
+        <div class="col-md-6 pt-3">
+            <a href="{% url 'home:proveedor_help'%}" style="color: black;"><h2><i class="fas fa-truck"></i> Proveedores</h2></a>            
+            <p>Mantén un registro de tus proveedores, gestiona los productos y servicios que te suministran, y realiza pedidos de stock cuando sea necesario.</p>
+        </div>
+        {% endif%}
+        {% if user.tipo_usuario == 'administrador' %}
+        <div class="col-md-6 pt-3">
+            <a href="{% url 'home:servicio_help'%}" style="color: black;"><h2><i class="fas fa-paw"></i> Servicios</h2></a> 
+            <p>Administra los servicios veterinarios que ofreces, registra los detalles y precios de cada servicio, y realiza seguimiento de las citas agendadas.</p>
+        </div>
+        {% endif%}
+        
+        <div class="col-md-6 pt-3">
+            <a href="{% url 'home:paciente_help'%}" style="color: black;"><h2><i class="fas fa-paw"></i> Pacientes</h2></a>
+            <p>Crea nuevos pacientes, registra a tu mascota, vee el historial de atenciones y el detalle de la mascota o paciente</p>
+        </div>
+        <div class="col-md-6 pt-3">
+            <a href="{% url 'home:cita_help'%}" style="color: black;"><h2><i class="fas fa-calendar-alt"></i> Agendamiento Citas</h2></a>
+            <p>Programa y gestiona las citas de tus clientes, asigna veterinarios disponibles, y mantén un seguimiento de las consultas médicas programadas.</p>
+        </div>
+        
+        {% if user.tipo_usuario != 'cliente' %}
+        <div class="col-md-6 pt-3">
+            <a href="{% url 'home:inventario_help'%}" style="color: black;"><h2><i class="fas fa-boxes"></i> Inventario de Productos</h2></a>
+            <p>Controla el stock de tu inventario de productos veterinarios, registra detalles de cada producto, realiza seguimiento de las entradas y salidas, y recibe alertas de stock mínimo.</p>
+        </div>
+        <div class="col-md-6 pt-3">
+            <a href="{% url 'home:consulta_help'%}" style="color: black;"><h2><i class="fas fa-stethoscope"></i> Consultas Médicas</h2></a>
+            <p>Registra y realiza seguimiento de las consultas médicas de tus pacientes, registra diagnósticos, tratamientos y observaciones, y realiza cálculos médicos automáticos.</p>
+        </div>
+        <div class="col-md-6 pt-3">
+            <a href="{% url 'home:reporte_help'%}" style="color: black;"><h2><i class="fas fa-chart-bar"></i> Reportes</h2></a>
+            <p>Genera reportes en formato PDF y Excel para obtener información estadística, como el total de nuevos clientes, pacientes y consultas médicas en un periodo de tiempo determinado.</p>
+        </div>
+        {% endif%}
+    </div>
+    
+
+</div>
+
+{% endblock %}
+
+
+

@@ -1,0 +1,28 @@
+<div class="container">
+    <h1>Reporte de Consultas</h1>
+    <h3>Total de consultas del rango seleccionado: {{ total_consultas }}</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Fecha de Consulta</th>
+                    <th>Veterinario</th>
+                    <th>Paciente</th>
+                    <th>Diagnóstico</th>
+                    <th>Tratamiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for consulta in consultas %}
+                <tr>
+                    <td>{{ consulta.fecha_consulta }}</td>
+                    <td>{{ consulta.veterinario }}</td>
+                    <td>{{ consulta.paciente }}</td>
+                    <td>{{ consulta.diagnostico }}</td>
+                    <td>{{ consulta.tratamiento }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

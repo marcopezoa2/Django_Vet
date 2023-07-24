@@ -1,0 +1,67 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Registro Historial {% endblock title %}
+
+{% block contenido %}
+<div class="container-fluid">
+    <div class="container">
+        <div class="row ">
+          <div class="main-login main-center mx-3 my-3">
+            <div class="panel-heading">
+              <h2 class="text-center">Registrar Historial</h2>
+            </div>
+            <hr>
+            <form class="form-horizontal" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              {% for error in form.non_field_errors %}
+              <div class="alert alert-danger">
+                {{ error }}
+              </div>
+              {% endfor %}
+              <fieldset>
+                <div class="row">
+                  {% for field in form %}
+                  <div class="col-lg-6 col-md-12 col-sm-12">
+                    <div class="form-group row{% if field.errors %} has-error{% endif %}">
+                      <label for="{{ field.auto_id }}" class="cols-sm-6 control-label">{{ field.label }}</label>
+                      <div class="input-group mb-3 form-group">
+                        <div class="input-group-prepend col-lg-12">
+                          {% if field.name == 'nombre_empresa' %}
+                          <span class="input-group-text"><i class="fa fa-building" aria-hidden="true"></i></span>
+                          {% elif field.name == 'rut_empresa' %}
+                          <span class="input-group-text"><i class="fa fa-id-card" aria-hidden="true"></i></span>
+                          {% elif field.name == 'nombre_contacto' %}
+                          <span class="input-group-text"><i class="fa fa-user" aria-hidden="true"></i></span>
+                          {% elif field.name == 'correo' %}
+                          <span class="input-group-text"><i class="fa fa-envelope" aria-hidden="true"></i></span>
+                          {% elif field.name == 'telefono' %}
+                          <span class="input-group-text"><i class="fa fa-phone" aria-hidden="true"></i></span>
+                          {% else %}
+                          <span class="input-group-text"><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+                          {% endif %}
+                          {% render_field field class="form-control" %}
+                        </div>
+                      </div>
+                      {% for error in field.errors %}
+                      <span class="help-block">{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary mx-1">Guardar</button>
+                  <a href="{% url 'index' %}" class="btn btn-secondary">Cancelar</a>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+    </div>
+</div>
+{% endblock contenido %} 

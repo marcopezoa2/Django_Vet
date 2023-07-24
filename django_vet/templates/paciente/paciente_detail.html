@@ -1,0 +1,89 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Detalle {% endblock title %}
+{% load humanize %}
+{% block contenido %}
+
+
+<div class="container my-4">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-8">
+          <h3>Detalles del Paciente</h3>
+          <!-- <h3 class="card-title">Detalles de consulta</h3> -->
+        </div>
+        <div class="col-md-4 text-md-right">
+          <a href="{% url 'paciente:actualizar_paciente' paciente.pk %}" class="btn btn-success btn-sm"><i
+              class="fa fa-edit"></i></a>
+          <a href="{% url 'paciente:eliminar_paciente' paciente.pk %}" class="btn btn-danger btn-sm"><i
+              class="fa fa-trash"></i></a>
+          <a href="{% url 'paciente:listar_paciente'%}" class="btn btn-sm btn-primary"><i
+              class="fas fa-arrow-left"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h4>{{ paciente.nombre }}</h4>
+          <hr>
+          <p><strong>ID:</strong> {{ paciente.pk }}</p>
+          <p><strong>Dueño:</strong> {{ paciente.dueño }}</p>
+          <p><strong>Edad:</strong> {{ paciente.edad }}</p>
+          <p><strong>Fecha nacimiento:</strong> {{ paciente.fecha_nac|date:"d/m/Y" }}</p>
+          <p><strong>Especie:</strong> {{ paciente.especie }}</p>
+          <p><strong>Género:</strong> {{ paciente.genero }}</p>
+          <p><strong>Raza:</strong> {{ paciente.raza }}</p>
+          <p><strong>Peso Inicial:</strong>{{ paciente.peso|floatformat:0|intcomma }} Kgs.</p>
+          <p>
+            <strong>Fallecido:</strong>
+            {% if paciente.fallecido %}
+            Sí
+            {% else %}
+            No
+            {% endif %}
+          </p>
+          <p>
+            <strong>Extraviado:</strong>
+            {% if paciente.extraviado %}
+            Sí
+            {% else %}
+            No
+            {% endif %}
+          </p>
+          <p>
+            <strong>Estado:</strong>
+            {% if paciente.activo %}
+            Activo
+            {% else %}
+            Desactivado
+            {% endif %}
+          </p>
+          <p><strong>Fecha creación:</strong> {{ paciente.fecha_creacion|date:"d/m/Y" }}</p>
+        </div>
+        <div class="row justify-content-center align-items-center mx-auto">
+          <div class="col-md-12">
+            {% if paciente.foto %}
+            <img src="{{ paciente.foto.url }}" alt="Imagen paciente" class="img-fluid">
+            {% else %}
+            <img src="{% static 'img/no_image/no_image.png'%}" alt="Imagen paciente" class="img-fluid">
+            {% endif %}
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

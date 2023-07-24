@@ -1,0 +1,111 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Registro Consulta Medica {% endblock title %}
+{% load humanize %}
+{% block contenido %}
+
+
+<div class="container my-4">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-8">
+          <h3>Detalles de consulta</h3>
+          <!-- <h3 class="card-title">Detalles de consulta</h3> -->
+        </div>
+        <div class="col-md-4 text-md-right">
+          <a class="btn btn-sm btn-danger" href="{% url 'consulta:generar_reporte_pdf' consulta.pk %}"
+            target="_blank">Generar <i class="fas fa-file-pdf"></i></a>
+          <a href="{% url 'consulta:actualizar_consulta' consulta.pk %}" class="btn btn-success btn-sm"><i
+              class="fa fa-edit"></i></a>
+          <a href="{% url 'consulta:eliminar_consulta' consulta.pk %}" class="btn btn-danger btn-sm"><i
+              class="fa fa-trash"></i></a>
+          <a href="{% url 'consulta:listar_consulta'%}" class="btn btn-sm btn-primary"><i
+              class="fas fa-arrow-left"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h4>Paciente</h4>
+          <p><strong>Cliente:</strong> {{ consulta.paciente.dueño.first_name }} {{ consulta.paciente.dueño.last_name }}
+            / {{ consulta.paciente.dueño }}</p>
+          <p><strong>Nombre:</strong> {{ consulta.paciente.nombre }}</p>
+          <p><strong>Raza:</strong> {{ consulta.paciente.raza }}</p>
+          <p><strong>Edad:</strong> {{ consulta.paciente.edad }} Meses</p>
+          <p><strong>Fecha de nacimiento:</strong> {{ consulta.paciente.fecha_nac }}</p>
+          <p><strong>Número de chip:</strong> {{ consulta.paciente.nro_chip }}</p>
+          <p><strong>Color:</strong> {{ consulta.paciente.color }}</p>
+          {% for vacunacion in consulta.vacunaciones.all %}
+          <p><strong>Vacuna:</strong> {{ vacunacion.nombre }}</p>
+          <p><strong>Fecha vacunación:</strong> {{ vacunacion.fecha|date:"d/m/Y" }}</p>
+          {% empty %}
+          <p>No se registraron vacunaciones para esta consulta.</p>
+          {% endfor %}
+
+          {% for desparasitacion in consulta.desparasitaciones.all %}
+          <p><strong>Desparasitación:</strong> {{ desparasitacion.nombre }}</p>
+          <p><strong>Fecha Desparasitación:</strong> {{ desparasitacion.fecha|date:"d/m/Y" }}</p>
+          {% empty %}
+          <p>No se registraron desparasitaciones para esta consulta.</p>
+          {% endfor %}
+        </div>
+        <div class="col-md-6">
+          <h4>Consulta</h4>
+          <p><strong>Fecha de consulta:</strong> {{ consulta.fecha_consulta|date:"d/m/Y" }}</p>
+          <p><strong>Veterinario:</strong> {{ consulta.veterinario.first_name }} {{ consulta.veterinario.last_name }}
+          </p>
+          <p><strong>Servicio:</strong> {{ consulta.servicio.nombre }}</p>
+          <p><strong>Cita agendada:</strong> {{ consulta.horario_consulta }}</p>
+          <p><strong>Temperatura:</strong> {{ consulta.temperatura }} °C</p>
+          <p><strong>Peso:</strong> {{ consulta.peso }} Kgs.</p>
+          <p><strong>Altura:</strong> {{ consulta.altura }} cm.</p>
+          <p><strong>IMC:</strong> {{ consulta.imc }}</p>
+
+          {% if consulta.motivo %}
+          <p><strong>Motivo de consulta:</strong> {{ consulta.motivo }}</p>
+          {% else %}
+          <p><strong>Motivo de consulta:</strong> Sin información</p>
+          {% endif %}
+
+          {% if consulta.diagnostico %}
+          <p><strong>Diagnóstico:</strong> {{ consulta.diagnostico }}</p>
+          {% else %}
+          <p><strong>Diagnóstico:</strong> Sin información</p>
+          {% endif %}
+
+          {% if consulta.tratamiento %}
+          <p><strong>Tratamiento:</strong> {{ consulta.tratamiento }}</p>
+          {% else %}
+          <p><strong>Tratamiento:</strong> Sin información</p>
+          {% endif %}
+          {% if consulta.observaciones %}
+          <p><strong>Observaciones:</strong> {{ consulta.observaciones }}</p>
+          {% else %}
+          <p><strong>Observaciones:</strong> Sin información</p>
+          {% endif %}
+          <hr>
+          <p><strong>Examenes:</strong></p>
+          {% if consulta.archivos_paciente %}
+          <a href="{% url 'consulta:descargar_archivo' consulta.pk %}" target="_blank"><i class="fa fa-file-pdf fa-2x"
+              aria-hidden="true"></i> {{ consulta.archivos_paciente }}</a>
+          {% else %}
+          No se ha cargado ningún archivo.
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+{% endblock %}

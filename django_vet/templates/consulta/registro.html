@@ -1,0 +1,81 @@
+<!-- HERENCIA del template base 'index.html' -->
+{% extends 'base/base_modulos.html' %}
+<!-- Carga de archivos estaticos -->
+{% load static %}
+<!-- Para formularios -->
+{% load widget_tweaks %}
+
+{% block title %} Registro Consulta Medica {% endblock title %}
+
+{% block contenido %}
+{% for error in form.non_field_errors %}
+<hr>
+<div class='alert alert-danger'>
+  {{ error }}
+</div>
+<hr>
+{% endfor %}
+<div class="col-lg-8 col-md-8 col-sm-12 mx-auto py-4">
+  <div class="card card-dark">
+    <div class="card-header">
+      {% if view.request.resolver_match.url_name == 'crear_consulta' %}
+        <h3 class="text-center">Registrar Consulta Médica</h3>
+      {% elif view.request.resolver_match.url_name == 'actualizar_consulta' %}
+        <h3 class="text-center">Modificar Consulta Médica</h3>
+      {% endif %}
+    </div>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="card-body">
+        {% for field in form %}
+        <div class="form-group row{% if field.errors %} has-error{% endif %}">
+          <div class="col-sm-12">
+            <label for="{{ field.auto_id }}" class="control-label col-lg-12">{{ field.label }}</label>
+          </div>
+          <div class="col-sm-12">
+            <div class="input-group mb-3">
+              <div class="input-group-prepend col-lg-12">
+                <div class="input-group">
+                  <span class="input-group-text">
+                    {% if field.name == 'rut' %}
+                    <i class="fas fa-id-card"></i>
+                    {% elif field.name == 'username' or field.name == 'tipo_usuario' %}
+                    <i class="fas fa-users"></i>
+                    {% elif field.name == 'first_name' %}
+                    <i class="fas fa-user"></i>
+                    {% elif field.name == 'last_name' %}
+                    <i class="fas fa-user"></i>
+                    {% elif field.name == 'email' %}
+                    <i class="fas fa-envelope"></i>
+                    {% elif field.name == 'direccion' or field.name == 'comuna' %}
+                    <i class="fas fa-location-arrow"></i>
+                    {% elif field.name == 'telefono' %}
+                    <i class="fas fa-phone"></i>
+                    {% else %}
+                    <i class="fas fa-key"></i>
+                    {% endif %}
+                  </span>
+                  {% render_field field class="form-control" %}
+                </div>
+              </div>
+            </div>
+          </div>
+          {% for error in field.errors %}
+          <div class="col-sm-6 offset-sm-6">
+            <span class="help-block" style="color: red;">{{ error }}</span>
+          </div>
+          {% endfor %}
+        </div>
+        {% endfor %}
+      </div>
+      <div class="card-footer">
+        <div class="button-container text-center">
+          <button type="submit" class="btn btn-dark">Guardar</button>
+          <a href="{% url 'consulta:lista_consulta' %}" class="btn btn-secondary">Cancelar</a>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock contenido %}   
