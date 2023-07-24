@@ -1,0 +1,15 @@
+/* Para los mensaje de error */
+.border-error{
+    border: solid 1px red !important;
+    box-shadow: 0 0 2px red !important;
+}
+
+.error{
+    color: red !important;
+    display: block;
+}
+
+.mensaje{
+    height: 7rem !important;
+}
+

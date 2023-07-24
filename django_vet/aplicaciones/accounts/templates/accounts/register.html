@@ -1,0 +1,82 @@
+{% extends 'base/index.html' %}
+
+{% load widget_tweaks %}
+
+{% block title %}
+Registro | {{ block.super }}
+{% endblock %}
+
+{% block contenido %}
+{% for error in form.non_field_errors %}
+<hr>
+<div class='alert alert-danger'>
+  {{ error }}
+</div>
+<hr>
+{% endfor %}
+<div class="col-lg-6 col-md-8 col-sm-12 mx-auto py-4">
+  <div class="card card-dark">
+    <div class="card-header">
+      <h3 class="text-center">Registro de Usuario</h3>
+    </div>
+    <form  method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+      {% csrf_token %}
+      <div class="card-body">
+        {% for field in form %}
+        <div class="form-group row mb-0 pt-3{% if field.errors %} has-error{% endif %}">
+          <label for="{{ field.auto_id }}" class="col-sm-6 control-label">{{ field.label }}</label>
+          <div class="input-group form-group mb-0">
+            <div class="input-group-prepend col-lg-12">
+              {% if field.name == 'rut' %}
+              <span class="input-group-text"><i class="fas fa-id-card"></i></span>
+              {% elif field.name == 'username' %}
+              <span class="input-group-text"><i class="fas fa-users"></i></span>
+              {% elif field.name == 'first_name' %}
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+              {% elif field.name == 'last_name' %}
+              <span class="input-group-text"><i class="fas fa-user"></i></span>
+              {% elif field.name == 'email' %}
+              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              {% elif field.name == 'direccion' %}
+              <span class="input-group-text"><i class="fas fa-location-arrow"></i></i></span>
+              {% elif field.name == 'telefono' %}
+              <span class="input-group-text"><i class="fas fa-phone"></i></span>
+              {% else %}
+              <span class="input-group-text"><i class="fas fa-key"></i></span>
+              {% endif %}
+              {% render_field field class="form-control" %}
+            </div>
+          </div>
+        </div>
+        {% if field.name == 'rut' %}
+        <i><span id="rutError" class='help-block error-message' style="color: red;"></span></i>
+        {% elif field.name == 'username' %}
+        <i><span id="username-error" class="error-message" style="color: red;"></span></i>
+        {% elif field.name == 'first_name' %}
+        <i><span id="first-name-error" class="error-message" style="color: red;"></span></i>
+        {% elif field.name == 'last_name' %}
+        <i><span id="last-name-error" class="error-message" style="color: red;"></span></i>
+        {% elif field.name == 'email' %}
+        <i><span id="email-error" class="error-message" style="color: red;"></span></i>
+        {% elif field.name == 'telefono' %}
+        <i><span id="telefono-error" class="error-message" style="color: red;"></span></i>
+        {% elif field.name == 'direccion' %}
+        <i><span id="direccion-error" class="error-message" style="color: red;"></span></i>
+        {% endif %}
+        {% for error in field.errors %}
+        <i><span class='help-block' style="color: red;">{{ error }}</span></i>
+        {% endfor %}
+        {% endfor %}
+      </div>
+      
+      <div class="text-center py-2">
+        <a href="{% url 'accounts:login' %}">Si ya tiene una cuenta, por favor inicia sesión.</a>
+      </div>
+      <div class="card-footer">
+        <button type="submit" class="btn-block btn btn-dark">Registrarse</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock contenido %}

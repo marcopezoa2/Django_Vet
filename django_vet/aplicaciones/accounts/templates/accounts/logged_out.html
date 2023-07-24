@@ -1,0 +1,17 @@
+{% extends 'base/index.html' %}
+
+{% block contenido %}
+  <main class="m-0 p-0">
+    <div class="col-8 col-sm-12 card text-center mx-auto" style="margin-top: 50px; margin-bottom: 50px;">
+      <div class="card-header">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Ha cerrado sesión correctamente</h5>
+        <a href="{% url 'accounts:login'%}" class="btn btn-primary">Volver a Iniciar sesión</a>
+      </div>
+      <div class="card-footer text-muted pb-3">
+      </div>
+    </div>
+  </main>
+
+{% endblock contenido  %}

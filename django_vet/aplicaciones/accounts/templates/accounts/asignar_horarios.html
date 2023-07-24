@@ -1,0 +1,44 @@
+{%extends 'accounts/index.html'%}
+
+{% load widget_tweaks %}
+
+{% block title %}
+Asignar Horarios
+{% endblock %}
+
+{% block accounts_container %}
+
+<form method="post" action="{% url 'accounts:asignar_horarios' %}">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="veterinario">Veterinario:</label>
+        <select class="form-control" id="veterinario" name="veterinario">
+            {% for veterinario in veterinarios %}
+            <option value="{{ veterinario.pk }}">{{ veterinario.user.last_name }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="dia_de_la_semana">Día de la semana:</label>
+        <select class="form-control" id="dia_de_la_semana" name="dia_de_la_semana">
+            <option value="LUN">Lunes</option>
+            <option value="MAR">Martes</option>
+            <option value="MIE">Miércoles</option>
+            <option value="JUE">Jueves</option>
+            <option value="VIE">Viernes</option>
+            <option value="SAB">Sábado</option>
+            <option value="DOM">Domingo</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="hora_inicio">Hora de inicio:</label>
+        <input type="time" class="form-control" id="hora_inicio" name="hora_inicio">
+    </div>
+    <div class="form-group">
+        <label for="hora_fin">Hora de fin:</label>
+        <input type="time" class="form-control" id="hora_fin" name="hora_fin">
+    </div>
+    <button type="submit" class="btn btn-primary">Asignar horario</button>
+</form>
+
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base/base_modulos.html' %}
+{% load static %}
+
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- BLOCK para los mensajes -->
+    
+
+    {% block contenido%}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Estimado {{ user.first_name|add:' ' }}{{ user.last_name }}</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'home:index' %}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'accounts:index' %}">Mi cuenta</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <!-- Default box -->
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3>¡Bienvenido a tu página de inicio! </h3>
+                        </div>
+                        {% if user.tipo_usuario == 'administrador' %}
+                        <div class="card-body text-justify">
+                            <p> Desde aquí podrás acceder a todas las funcionalidades que necesitas para gestionar el negocio de manera efectiva. Con nuestro menú de navegación intuitivo, podrás administrar y gestionar fácilmente a los empleados, clientes, proveedores, servicios, las citas agendadas y consultas medicas, así como controlar el stock de tu inventario de productos.</p>
+                            <p>El sistema tambien permite realizar reportes en formato pdf y excel para conocer el total de nuevos clientes, pacientes y consultas medicas de un periodo de tiempo determinado</p>
+                            <p>Nuestra plataforma te ofrece herramientas poderosas para mantener el control del negocio en todo momento, asegurándote de que todo esté en orden y funcionando sin problemas. Además, nuestro equipo de soporte está disponible para ayudarte con cualquier problema o pregunta que puedas tener.</p>
+                        </div>
+                        {% elif user.tipo_usuario == 'veterinario' %}
+                        <div class="card-body text-justify">
+                            <p> Desde aquí podrás acceder a las funcionalidades que necesitas para gestionar el negocio de manera efectiva. Con nuestro menú de navegación intuitivo, podrás administrar y gestionar fácilmente a los pacientes, las citas agendadas y consultas médicas, así como revisar el stock del inventario de productos e insumos médicos que necesitas.</p>
+                            <p>El sistema también permite realizar reportes en formato PDF y Excel para conocer el total de nuevos pacientes y consultas médicas en un periodo de tiempo determinado.</p>
+                            <p>Nuestra plataforma te ofrece herramientas poderosas para mantener el control del negocio en todo momento, asegurándote de que todo esté en orden y funcionando sin problemas. Además, nuestro equipo de soporte está disponible para ayudarte con cualquier problema o pregunta que puedas tener.</p>
+
+                        </div>
+                        {% elif user.tipo_usuario == 'recepcionista' %}
+                        <div class="card-body text-justify">
+                            <p> Desde aquí podrás acceder a las funcionalidades que necesitas para gestionar el negocio de manera efectiva. Con nuestro menú de navegación intuitivo, podrás administrar y gestionar fácilmente a los clientes, pacientes y las citas agendadas</p>
+                            <p>El sistema tambien permite realizar reportes en formato pdf y excel para conocer el total de nuevos clientes y pacientes en un periodo de tiempo determinado</p>
+                            <p>Nuestra plataforma te ofrece herramientas poderosas para mantener el control del negocio en todo momento, asegurándote de que todo esté en orden y funcionando sin problemas. Además, nuestro equipo de soporte está disponible para ayudarte con cualquier problema o pregunta que puedas tener.</p>
+                        </div>     
+                        {% else %}
+                        <div class="card-body text-justify">
+                            <p> Desde aquí podrás acceder a las funcionalidades del sistema que te permiten conocer el estado de tu mascota, al historial de consultas medicas, podras ver o descargar examenes que se encuentren disponibles para tu mascota de acuerdo a la consulta asosiada. Tambioen podras agendar hora con nuestros veterinarios para obtener una atencion personalizada en el horario que te acomode.</p>
+                        </div>
+                        {% endif %}
+                        <div class="card-footer">
+                            <p>¡Gracias por elegirnos como tu solución de gestión empresarial!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endblock contenido%}
+</div>

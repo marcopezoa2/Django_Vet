@@ -1,0 +1,113 @@
+{% extends 'base/index.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %}
+
+Login | {{ block.super }}
+
+{% endblock title %}
+
+
+{% block contenido %}
+
+{% for error in form.non_field_errors %}
+<script>
+  swal.fire({
+    icon: 'error',
+    title: 'Error',
+    html: '<span class="text-white">{{ error }}</span>',
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 4000,
+    toast: true,
+    background: '#eb8f5a',
+    iconColor: '#ffffff',
+    customClass: {
+      title: 'text-white',
+      popup: 'bg-danger'
+    }
+  });
+</script>
+{% endfor %}
+<!-- <body class="login-page" cz-shortcut-listen="true" style="min-height: 496.781px;" > -->
+<div class="login-page" style="height: 80vh;">
+  <div class="login-box">
+    <div class="card">
+      <div class="brand_logo_container login-logo text-center pt-3 mb-0">
+        <img src="{% static 'img/logo/LogoVet.png' %}" alt="Logo Veterinaria" class="brand-image brand_logo"
+          style="width: 130px; height: auto;">
+      </div>
+      <div class="card-body login-card-body pt-0">
+        <p class="login-box-msg pt-2">Clinica Veterinaria El Valle</p>
+        <form action="" method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <div class="input-group">
+              <input type="text" class="form-control" maxlength="12" name="{{ form.username.name }}" id="rutInput" oninput="formatRutInput()" placeholder="Ingrese el Rut o Correo">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-envelope"></span>
+                </div>
+              </div>
+            </div>
+            <i><span id="rutError" class='help-block' style="color: red;"></span></i>
+            {% for error in form.password.errors %}
+            <i><span class='help-block' style="color: red;">{{ error }}</span></i>
+            {% endfor %}
+          </div>
+
+          <div class="mb-3">
+            <div class="input-group">
+              <input type="password" class="form-control" name="{{ form.password.name }}" placeholder="Contraseña">
+              <div class="input-group-append">
+                <div class="input-group-text">
+                  <span class="fas fa-lock"></span>
+                </div>
+              </div>
+            </div>
+            {% for error in form.password.errors %}
+            <i><span class='help-block' style="color: red;">{{ error }}</span></i>
+            {% endfor %}
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-8 mb-3">
+              <div class="icheck-primary">
+                <input type="checkbox" id="remember">
+                <label for="remember">
+                  Recuérdame
+                </label>
+              </div>
+            </div>
+            <div class="col-12 col-md-4">
+              <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+            </div>
+          </div>
+        </form>
+        <div class="text-center">
+          <p class="mb-1">
+            <a href="{% url 'accounts:password_reset' %}">¿Olvidaste tu Contraseña?</a>
+          </p>
+          <hr>
+          <p class="mb-0">
+            <a href="{% url 'accounts:register' %}" class="text-center">¿Eres nuevo? Registrate aquí</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  const rut = '17851727-9';
+  const formattedRut = formatRut(rut);
+  console.log(formattedRut); // Imprime: 12.345.678-9
+</script>
+
+<script>
+  function formatRutInput() {
+    const rutInput = document.getElementById('rutInput');
+    const formattedRut = formatRut(rutInput.value);
+    rutInput.value = formattedRut;
+}
+</script>
+
+{% endblock contenido%}

@@ -1,0 +1,46 @@
+{% extends 'base/base_modulos.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block title %}
+    Lista Grupos y Permisos | {{ block.super }}
+{% endblock title %}
+
+{% block contenido %}
+<style>
+    .vertical-line {
+        border-left: 1px solid #ddd;
+    }
+</style>
+<div class="container">
+    <h1>Lista de Grupos</h1>
+    <a class="btn-sm btn-warning" href="{% url 'accounts:asignar_permisos' %}">Crear Roles y Asignar permisos</a>
+    <br>
+    <span style="color: red;">(Crea automáticamente los roles Cliente, Veterinario, Recepcionista y Administrador y asigna permisos por defecto a cada rol)</span>
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre del Grupo</th>
+                    <th class="vertical-line">Opciones</th>
+                    <th class="vertical-line">Permisos</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for group in groups %}
+                <tr>
+                    <td>{{ group.name }}</td>
+                    <td class="vertical-line text-center">
+                        <a href="{% url 'accounts:group_update' group_id=group.id %}" class="btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+                    </td>
+                    <td class="vertical-line text-justify">
+                        {% for permission in group.permissions.all %}
+                        {{ permission.name }}{% if not forloop.last %} | {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock contenido %}

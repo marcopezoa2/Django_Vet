@@ -1,0 +1,101 @@
+/* Menu 'Navbar' */
+.nav_nav{
+    background-color: #145396;
+}
+
+.navTextLink{
+    color: white !important;
+}
+
+.navTextLink:hover{
+    /* background-color: white; */
+    color: #eeca06 !important;
+    font-weight: bold;
+}
+
+
+
+/* Jumbotron */
+.jumbotron {
+    /* background-image: url('/static/assets/banner/banner2.jpg');  */
+    margin-left: 10px;
+    margin-right: 10px;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    border-radius: 10px;
+    text-shadow: 1px 1px 10px #000;
+    background-repeat: no-repeat;
+    height: 300px;
+    -webkit-animation: change-bg-image 15s linear infinite;
+    animation: change-bg-image 15s linear infinite;
+  }
+  
+  .jumbotron .container {
+    position: relative;
+    z-index: 1;
+  }
+  
+  @-webkit-keyframes change-bg-image {
+    0% {
+      background-image: url(/static/img/banner/banner1.jpg);
+    }
+  
+    33% {
+      background-image: url(/static/img/banner/banner2.jpg);
+    }
+  
+    66% {
+      background-image: url(/static/img/banner/banner3.jpg);
+    }
+  
+    100% {
+      background-image: url(/static/img/banner/banner1.jpg);
+    }
+  }
+  
+  @keyframes change-bg-image {
+    0% {
+      background-image: url(/static/img/banner/banner1.jpg);
+    }
+  
+    33% {
+      background-image: url(/static/img/banner/banner2.jpg);
+    }
+  
+    66% {
+      background-image: url(/static/img/banner/banner3.jpg);
+    }
+  
+    100% {
+      background-image: url(/static/img/banner/banner1.jpg);
+    }
+  }
+
+  /* Boton Scroll */
+.btn-scroll{
+  position: fixed;
+  bottom: 42px;
+  right: 30px;
+  padding: 15px - 15px;
+  margin: 0 - auto;
+  background-color: #145396;
+  color: white;
+  border: 1px - solid - white;
+  border-radius: 100%;
+  cursor: pointer;
+}
+
+/* Footer */
+.main-footer{
+    background-color: #343A40;
+}
+
+
+/* Imagen de Usuario */
+.user-image {
+  width: 128px;
+  height: 128px;
+}
+
+

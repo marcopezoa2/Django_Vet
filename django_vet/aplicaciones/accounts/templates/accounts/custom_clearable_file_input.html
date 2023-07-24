@@ -1,0 +1,68 @@
+{% if widget.is_initial %}
+<div class="field-wrapper">
+    <div class="current-image">
+        {% if widget.value.url %}
+        <img src="{{ widget.value.url }}" width="100" height="100" alt="Current Image" />
+        {% endif %}
+    </div>
+    <div class="clear-image">
+        {{ widget.clear_template_substitution }}
+        <p>hola</p>
+    </div>
+</div>
+{% endif %}
+<div class="change-image">
+    <div class="input">
+        {{ widget.input }}
+        <p>hola</p>
+    </div>
+    <div class="buttons">
+        {% if widget.is_initial %}
+        <div class="edit-image">
+            {{ widget.template_value }}
+            <p>hola</p>
+        </div>
+        {% endif %}
+        <div class="upload-image">
+            {{ widget.addition_text }}
+            {{ widget.input_text }}
+            <p>hola</p>
+        </div>
+    </div>
+</div>
+
+<style>
+.field-wrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.current-image {
+  margin-right: 10px;
+}
+
+.clear-image {
+  margin-right: 10px;
+}
+
+.change-image {
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  flex: 1;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.edit-image,
+.upload-image {
+  margin-right: 10px;
+}
+</style>
